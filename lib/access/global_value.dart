@@ -8,8 +8,8 @@ class GlobalString extends StatelessWidget{
     // TODO: implement build
     throw UnimplementedError();
   }
-  static String usernameError = "";
-  static String passwordError = "";
+  static String usernameError = "Username cannot be blank.";
+  static String passwordError = "Password cannot be blank.";
   static String token = "";
   static String username = "";
 }

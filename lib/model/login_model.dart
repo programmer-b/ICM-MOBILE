@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:crackerit_02/access/global_value.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:crackerit_02/utils/snack_bar.dart';
@@ -17,19 +18,23 @@ class API extends StatelessWidget{
     var res = await http.post(Uri.parse('http://api.crackit.tk/v1/auth/login'),
         body: {"username": username, "password": password});
     print('res : ${res.body}');
-    String response = res.body;
 
-    snack_bar.showSnackBar(context, response);
-    Navigator.pop(context);
+    if (res.statusCode == 200){
+      final exData = jsonDecode(res.body);
+      print(exData['dataPayload']['data']['token']);
 
-    if (res.statusCode == 200){ final exData = jsonDecode(res.body);
-    print(exData['dataPayload']['data']);
-    return res.body;
-    } else{
+      GlobalString.token = exData['dataPayload']['data']['token'];
+      GlobalString.username = exData['dataPayload']['data']['username'];
+
+      snack_bar.showSnackBar(context, "Login is success");
+      Navigator.pop(context,true);
+    }
+
+    else{
       final exData = jsonDecode(res.body);
 
-      print(exData);
-      return res.statusCode;
+      snack_bar.showSnackBar(context, exData['errorPayload']['errors']['password']);
+      Navigator.of(context, rootNavigator: true).pop();
     }
 
   }

@@ -42,12 +42,9 @@ class _MyHomePageState extends State<MyHomePage> {
       controller: username,
       obscureText: false,
       style: style,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return GlobalString.usernameError;
-        }
-        return null;
-      },
+      validator: (input) => input!.isEmpty
+          ? GlobalString.usernameError
+          : null,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           prefixIcon: Icon(
@@ -62,12 +59,9 @@ class _MyHomePageState extends State<MyHomePage> {
       controller: password,
       obscureText: hidePassword,
       style: style,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return GlobalString.usernameError;
-        }
-        return null;
-      },
+      validator: (value) => value!.isEmpty
+      ? GlobalString.passwordError
+      : null,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
 
@@ -99,10 +93,9 @@ class _MyHomePageState extends State<MyHomePage> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
+
           if(globalFormKey.currentState!.validate()) {
             API.loginMethod(username.text, password.text,context);
-          } else {
-            snack_bar.showSnackBar(context, "no error");
           }
         },
         child: Text("Login",
@@ -155,4 +148,14 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     return false;
   }
+
+  void _resetGlobalValue(){
+    GlobalString.username = "";
+    GlobalString.usernameError = "";
+    GlobalString.passwordError = "";
+    GlobalString.token = "";
+
+    GlobalBool.hasPasswordError = false;
+    GlobalBool.hasUsernameError = false;
+}
 }
