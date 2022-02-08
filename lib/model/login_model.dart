@@ -23,8 +23,7 @@ class API extends StatelessWidget{
     Navigator.pop(context);
 
     if (res.statusCode == 200){ final exData = jsonDecode(res.body);
-
-    print(exData);
+    print(exData['dataPayload']['data']);
     return res.body;
     } else{
       final exData = jsonDecode(res.body);

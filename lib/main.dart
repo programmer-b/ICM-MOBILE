@@ -1,7 +1,7 @@
 import 'package:crackerit_02/utils/snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'model/login_model.dart';
-import 'package:crackerit_02/main.dart';
+import 'access/global_value.dart';
 
 void main() => runApp(MyApp());
 
@@ -18,11 +18,6 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  static bool hasPassword = false;
-  static bool hasUsername = false;
-
-  static String usernameError = "";
-  static String passwordError = "";
 }
 
 class MyHomePage extends StatefulWidget {
@@ -49,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
       style: style,
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return usernameError;
+          return GlobalString.usernameError;
         }
         return null;
       },
@@ -67,6 +62,12 @@ class _MyHomePageState extends State<MyHomePage> {
       controller: password,
       obscureText: hidePassword,
       style: style,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return GlobalString.usernameError;
+        }
+        return null;
+      },
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
 
